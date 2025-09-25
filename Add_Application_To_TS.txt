@@ -1,0 +1,11 @@
+# Get the application object
+$App = Get-CMApplication -Name "7-Zip 25.01 (edition)"
+
+# Create the install application step (step object)
+$Step = New-CMTaskSequenceStepInstallApplication -Name "Install 7-Zip" -Application $App
+
+# Get the destination task sequence object
+$TS = Get-CMTaskSequence -Name "PSTS_Test_01"
+
+# Add the step to the task sequence (optionally specify insert index and group)
+$TS | Add-CMTaskSequenceStep -Step $Step
