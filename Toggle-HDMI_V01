@@ -1,0 +1,17 @@
+function Toggle-HDMI {
+    param (
+        [int]$Seconds = 15
+    )
+
+    $monitor = Get-PnpDevice | Where-Object { $_.Class -eq "Monitor" -and $_.Status -eq "OK" }
+
+    foreach ($m in $monitor) {
+        Disable-PnpDevice -InstanceId $m.InstanceId -Confirm:$false
+    }
+
+    Start-Sleep -Seconds $Seconds
+
+    foreach ($m in $monitor) {
+        Enable-PnpDevice -InstanceId $m.InstanceId -Confirm:$false
+    }
+}
